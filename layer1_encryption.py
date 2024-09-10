@@ -1,7 +1,7 @@
 from Crypto.Cipher import AES
 import base64
 import os
-
+import json
 
 # Planning on doing 128 bit AES key
 # Note - pycryto wasn't working ( buffer errors ) so pycrytodome added
@@ -35,3 +35,19 @@ class Encryption:
 
     
 
+with open('bsm.json','r') as file:
+    data= json.load(file)  
+    # data becomes python object loading json data
+
+json_string = json.dumps(data)
+# This is stringify method as called in javascript
+
+encryption = Encryption()
+encrypted_message = encryption.encrypt(json_string)
+
+print("Encrypted message is -> ", encrypted_message)
+print()
+
+decrypted_message = encryption.decrypt(encrypted_message)
+
+print("Decrypted message is -> ", decrypted_message)
