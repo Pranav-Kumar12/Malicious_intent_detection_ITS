@@ -41,3 +41,20 @@ class Blockchain:
         # Returning the block to which it belongs i.e. last block index +1 ( part of new mined block )
         return self.whole_chain[-1]['index']+ 1
     
+
+    def get_Hash(block):
+        # SHA-256 hash based
+        # Block needs to be stringified and sorted based on keys of json object to ensure uniform hashing
+        # encodes converts to binary bits for hashing
+
+        blockString= json.dumps(block, sort_keys= True)
+        encodedBlockString= blockString.encode()
+        hashedCode= hashlib.sha256(encodedBlockString)
+        return hashedCode.hexdigest() # better readability and storage in hexadecimal
+    
+
+"""
+
+Have to add proof of work working and then there will be api points exposed for application and mining.
+
+"""
