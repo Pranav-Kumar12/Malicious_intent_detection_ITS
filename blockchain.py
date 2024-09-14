@@ -40,3 +40,4 @@ class Blockchain:
 
         # Returning the block to which it belongs i.e. last block index +1 ( part of new mined block )
         return self.whole_chain[-1]['index']+ 1
+    
