@@ -83,5 +83,35 @@ app= Flask(__name__)
 
 blockchain= Blockchain()
 
+@app.route('/transactions/new', methods= ['POST'])
+def newTransaction():
+    data= request.get_json()
+
+    # checking missing fields
+    fieldsNeeded= ['senderVehicle', 'receiverVehicle', 'v2xMessage']
+    for field in fieldsNeeded:
+        isMissing= True
+        for fieldPresent in data:
+            if(field==fieldPresent):
+                isMissing= False
+        if(isMissing):
+            return 'Missing fields in transaction', 400
+
+    indexObtained= blockchain.newMessage(data['senderVehicle'], data['receiverVehicle'], data['v2xMessage'])
+
+    response= {'message' : f'New message transaction for block number {indexObtained}'}
+
+    return jsonify(response), 201
+
+@app.route('/chain', methods= ['GET'])
+def whole_chain():
+    # whole chain and length
+    response= {
+        'chain': blockchain.wholeChain,
+        'chainLength': len(blockchain.wholeChain)
+    } 
+
+    return jsonify(response), 200
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port= 5050)
