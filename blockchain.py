@@ -64,9 +64,7 @@ class Blockchain:
         mergeProofs= f'{previousProof}{curProof}'
         mergeProofs= mergeProofs.encode()
         hashUnderReview= hashlib.sha256(mergeProofs).hexdigest()
-        if(len(hashUnderReview)>=4 and hashUnderReview[0]=='0' and hashUnderReview[1]=='0' and hashUnderReview[2]=='0' and hashUnderReview[3]=='0'){
-            return True
-        }
+        if(len(hashUnderReview)>=4 and hashUnderReview[0]=='0' and hashUnderReview[1]=='0' and hashUnderReview[2]=='0' and hashUnderReview[3]=='0'):    return True
         return False
 
 
@@ -79,3 +77,11 @@ class Blockchain:
             if(result):  break
             else: curProof+=1
         return curProof
+    
+
+app= Flask(__name__)
+
+blockchain= Blockchain()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port= 5050)
