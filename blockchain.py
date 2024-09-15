@@ -21,7 +21,7 @@ class Blockchain:
             'timestamp': time(), 
             'transactions': self.currentTransactions,
             'proof': proof,
-            'previousHash': previousHash
+            'previousHash': previousHash or self.getHash(self.wholeChain[-1])
         }
         # all the transactions will be put in this block so reset all 
         self.currentTransactions= []
@@ -76,7 +76,7 @@ class Blockchain:
 
     def proofOfWork(self, previousProof):
         # have to find curProof such that hash(curProof*previousProof) has 4 leading zeroes = famous riddle to solve
-
+        # This proof of work makes it so computationally expensive to forge a new block so it necessry makes blockchain immutable
         curProof= 0
         while True:
             result= self.validateProof(previousProof, curProof)
@@ -109,6 +109,7 @@ def newTransaction():
 
     return jsonify(response), 201
 
+# this API end point is supposed to be helping nodes decrypt immutable transaction present on blockchain for consensus later on
 @app.route('/transactions/decrypt', methods=['POST'])
 def decrypt_transaction():
     data= request.get_json()
@@ -132,6 +133,29 @@ def decrypt_transaction():
     return jsonify(response), 200
 
 
+@app.route('/mine', methods=['GET'])
+def mineBlock():
+    # Anybody in the network can mine this block and add to blockchain- consensus over distributed network later
+    # Mining a new block to be added to wholeChain
+    # Proof of work algorithm will be executed and new block forged to the chain
+    lastBlock= blockchain.wholeChain[-1]
+    lastBlockProof= lastBlock['proof']
+    curProof= blockchain.proofOfWork(lastBlockProof)
+
+    previousHash= blockchain.getHash(lastBlock)
+    curBlock= blockchain.addBlock(curProof, previousHash)
+
+    response= {
+        'message': 'New block mined',
+        'transactions': curBlock['transactions'],
+        'proof': curBlock['proof'],
+        'previousHash': curBlock['previousHash'],
+        'index': curBlock['index'],
+        'timestamp': curBlock['timestamp']
+    }
+
+    return jsonify(response), 200
+
 @app.route('/chain', methods= ['GET'])
 def whole_chain():
     # whole chain and length
@@ -142,6 +166,13 @@ def whole_chain():
 
     return jsonify(response), 200
 
+"""
+Now an api end point that combines all multi hierarchial level of encryption, adversarially robust network and ledger will be added
+Called as handleV2xMessage
+When a message is captured after being broadcasted to nearby vehicles then handling these messages will be in this
+Can have cross network communications, broadcast transaction pool etc. but it will mostly be handled one by one.
+
+"""
 
 
 if __name__ == '__main__':
