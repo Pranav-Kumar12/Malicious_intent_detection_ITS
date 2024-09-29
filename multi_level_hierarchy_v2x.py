@@ -109,7 +109,7 @@ def newTransaction():
 
     return jsonify(response), 201
 
-# this API end point is supposed to be helping nodes decrypt immutable transaction present on blockchain for consensus later on
+# this API end point is supposed to be helping nodes decrypt immutable transaction present on blockchain
 @app.route('/transactions/decrypt', methods=['POST'])
 def decrypt_transaction():
     data= request.get_json()
@@ -135,7 +135,7 @@ def decrypt_transaction():
 
 @app.route('/mine', methods=['GET'])
 def mineBlock():
-    # Anybody in the network can mine this block and add to blockchain- consensus over distributed network later
+    # Anybody in the network can mine this block and add to blockchain- consensus over distributed network
     # Mining a new block to be added to wholeChain
     # Proof of work algorithm will be executed and new block forged to the chain
     lastBlock= blockchain.wholeChain[-1]

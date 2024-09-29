@@ -1,5 +1,7 @@
 {
     "messageType": "BSM",
+    "messageId": "ad1z0",
+    "messageCount": 8,
     "vehicleId": "123ABC",
     "timestamp": "2024-09-10T15:00:00Z",
     "position": {
