@@ -12,6 +12,7 @@ class Blockchain:
         self.addBlock(proof=100, previousHash='0000') 
         # genesis block doesn't need to have proper proof of work and previous_hash. Any random value here should work.
         self.encryption = Encryption()  # Encryption instance for use in blockchain
+        self.opinion = 0.5 # new block in sub-net/group has opinion value 0
 
     def addBlock(self, proof, previousHash= None):
         # proof is based on proof of work algorithm
