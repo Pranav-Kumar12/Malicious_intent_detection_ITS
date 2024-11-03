@@ -1,47 +1,48 @@
 {
     "messageType": "BSM",
-    "messageId": "V7_303",
-    "messageCount": 303,
-    "vehicleId": "V7",
-    "timestamp": "2024-11-03T16:11:11Z",
+    "messageId": "7_490",
+    "messageCount": 490,
+    "vehicleId": "7",
+    "timestamp": "2024-10-16T04:22:25Z",
     "position": {
-        "latitude": 37.7791220537337,
-        "longitude": -122.41845398470325,
-        "altitude": 14.742504614769292
+        "latitude": 37.7786113720006,
+        "longitude": -122.42654218456117,
+        "altitude": 16.712448100052004
     },
-    "speed": 35.03576422874389,
-    "heading": 56.364852160950434,
+    "speed": 78.33758891697539,
+    "heading": 205.63735021673938,
     "acceleration": {
-        "x": 0.28119633300484437,
-        "y": -0.7067028018535826,
-        "z": -0.48208576951847004
+        "x": -0.9743755904826641,
+        "y": 0.012345196381640777,
+        "z": 0.16330241868688855
     },
-    "brakeStatus": false,
+    "brakeStatus": true,
     "vehicleSize": {
-        "length": 4.047383653587596,
-        "width": 2.139024841655534
+        "length": 4.778072340177703,
+        "width": 2.3822164875044254
     },
     "pathHistory": [
         {
-            "timestamp": "2024-11-03T16:10:41Z",
+            "timestamp": "2024-10-16T04:21:55Z",
             "position": {
-                "latitude": 37.77919230514992,
-                "longitude": -122.41839084570198
+                "latitude": 37.778544756391874,
+                "longitude": -122.42654529268032
             }
         },
         {
-            "timestamp": "2024-11-03T16:10:11Z",
+            "timestamp": "2024-10-16T04:21:25Z",
             "position": {
-                "latitude": 37.77906442805611,
-                "longitude": -122.41845732300168
+                "latitude": 37.77850684355187,
+                "longitude": -122.42671065770361
             }
         }
     ],
     "pathPrediction": {
+        "timestamp": "2024-10-16T04:22:40Z",
         "position": {
-            "latitude": 37.77940682167165,
-            "longitude": -122.41919458060161
+            "latitude": 37.7793932828595,
+            "longitude": -122.42657752791028
         },
-        "confidence": 0.7800023387856496
+        "confidence": 0.5114765184888315
     }
 }

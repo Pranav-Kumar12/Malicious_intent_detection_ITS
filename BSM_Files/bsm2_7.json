@@ -1,47 +1,48 @@
 {
     "messageType": "BSM",
-    "messageId": "V2_74",
-    "messageCount": 74,
-    "vehicleId": "V2",
-    "timestamp": "2024-11-03T16:11:11Z",
+    "messageId": "2_34",
+    "messageCount": 34,
+    "vehicleId": "2",
+    "timestamp": "2024-10-16T04:22:36Z",
     "position": {
-        "latitude": 37.78241205053162,
-        "longitude": -122.42014118511965,
-        "altitude": 14.928309518139358
+        "latitude": 37.775345704397694,
+        "longitude": -122.42727169915503,
+        "altitude": 10.208368177191774
     },
-    "speed": 54.729554097706036,
-    "heading": 133.10197853361504,
+    "speed": 16.700492764228734,
+    "heading": 152.3350286230256,
     "acceleration": {
-        "x": 0.6989155525016537,
-        "y": -0.08009777139791341,
-        "z": 0.023950678436778117
+        "x": 0.5782491850847988,
+        "y": 0.3574170508138692,
+        "z": -0.09179159529357506
     },
-    "brakeStatus": true,
+    "brakeStatus": false,
     "vehicleSize": {
-        "length": 3.632312709819378,
-        "width": 2.475955619226433
+        "length": 4.3805873932635615,
+        "width": 2.403418400273594
     },
     "pathHistory": [
         {
-            "timestamp": "2024-11-03T16:10:41Z",
+            "timestamp": "2024-10-16T04:22:06Z",
             "position": {
-                "latitude": 37.78251029499267,
-                "longitude": -122.42019959516927
+                "latitude": 37.775303044636225,
+                "longitude": -122.42732219496722
             }
         },
         {
-            "timestamp": "2024-11-03T16:10:11Z",
+            "timestamp": "2024-10-16T04:21:36Z",
             "position": {
-                "latitude": 37.78257686078046,
-                "longitude": -122.42004618146242
+                "latitude": 37.7754102283191,
+                "longitude": -122.42719286263242
             }
         }
     ],
     "pathPrediction": {
+        "timestamp": "2024-10-16T04:22:51Z",
         "position": {
-            "latitude": 37.78151383108991,
-            "longitude": -122.4201481913145
+            "latitude": 37.775452853015956,
+            "longitude": -122.42819600264818
         },
-        "confidence": 0.6771690687562872
+        "confidence": 0.6398526465492704
     }
 }

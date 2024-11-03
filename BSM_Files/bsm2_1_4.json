@@ -1,47 +1,48 @@
 {
     "messageType": "BSM",
-    "messageId": "V2_456",
-    "messageCount": 456,
-    "vehicleId": "V2",
-    "timestamp": "2024-11-03T16:11:12Z",
+    "messageId": "2_413",
+    "messageCount": 413,
+    "vehicleId": "2",
+    "timestamp": "2024-10-16T04:22:25Z",
     "position": {
-        "latitude": 37.770488018084976,
-        "longitude": -122.41453214236094,
-        "altitude": 19.945172235467613
+        "latitude": 37.78482377105334,
+        "longitude": -122.42672127733165,
+        "altitude": 16.97664374928471
     },
-    "speed": 95.79629213117289,
-    "heading": 210.70179639314247,
+    "speed": 75.92306155643823,
+    "heading": 278.0925661071909,
     "acceleration": {
-        "x": 0.7438727035229611,
-        "y": -0.1994371172650231,
-        "z": -0.3886980031423021
+        "x": -0.6122134544530597,
+        "y": 0.10491771926587345,
+        "z": 0.2086241332229385
     },
-    "brakeStatus": true,
+    "brakeStatus": false,
     "vehicleSize": {
-        "length": 4.3004498298868485,
-        "width": 2.2723093148987616
+        "length": 4.057967612760667,
+        "width": 2.0978354607534655
     },
     "pathHistory": [
         {
-            "timestamp": "2024-11-03T16:10:42Z",
+            "timestamp": "2024-10-16T04:21:55Z",
             "position": {
-                "latitude": 37.7705374283472,
-                "longitude": -122.4144587201602
+                "latitude": 37.7847420814286,
+                "longitude": -122.42662663472792
             }
         },
         {
-            "timestamp": "2024-11-03T16:10:12Z",
+            "timestamp": "2024-10-16T04:21:25Z",
             "position": {
-                "latitude": 37.77056026969508,
-                "longitude": -122.41470567255215
+                "latitude": 37.784884783029575,
+                "longitude": -122.4268987154684
             }
         }
     ],
     "pathPrediction": {
+        "timestamp": "2024-10-16T04:22:40Z",
         "position": {
-            "latitude": 37.77108744248041,
-            "longitude": -122.41429919764285
+            "latitude": 37.78421070153828,
+            "longitude": -122.42750793798766
         },
-        "confidence": 0.551814022866207
+        "confidence": 0.9212819434759768
     }
 }

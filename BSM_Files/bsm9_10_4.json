@@ -1,47 +1,48 @@
 {
     "messageType": "BSM",
-    "messageId": "V9_428",
-    "messageCount": 428,
-    "vehicleId": "V9",
-    "timestamp": "2024-11-03T16:11:12Z",
+    "messageId": "9_401",
+    "messageCount": 401,
+    "vehicleId": "9",
+    "timestamp": "2024-10-16T04:21:59Z",
     "position": {
-        "latitude": 37.77791017367805,
-        "longitude": -122.42126259515173,
-        "altitude": 10.13189965096348
+        "latitude": 37.7719724965837,
+        "longitude": -122.40957170777817,
+        "altitude": 16.62101537440239
     },
-    "speed": 30.721165427080386,
-    "heading": 144.71900839854717,
+    "speed": 39.05443239269301,
+    "heading": 19.637455614828493,
     "acceleration": {
-        "x": 0.4081431164361551,
-        "y": -0.005999254985765479,
-        "z": 0.23081450156117989
+        "x": 0.39627674330058626,
+        "y": -0.4451225946207058,
+        "z": 0.4313903937706983
     },
-    "brakeStatus": false,
+    "brakeStatus": true,
     "vehicleSize": {
-        "length": 4.472031557540132,
-        "width": 1.8913661423363994
+        "length": 3.5475987549738077,
+        "width": 2.2256993972875896
     },
     "pathHistory": [
         {
-            "timestamp": "2024-11-03T16:10:42Z",
+            "timestamp": "2024-10-16T04:21:29Z",
             "position": {
-                "latitude": 37.777896456523,
-                "longitude": -122.4213351223977
+                "latitude": 37.771883140251745,
+                "longitude": -122.4095318169539
             }
         },
         {
-            "timestamp": "2024-11-03T16:10:12Z",
+            "timestamp": "2024-10-16T04:20:59Z",
             "position": {
-                "latitude": 37.77795848883997,
-                "longitude": -122.42132483692328
+                "latitude": 37.77191054416069,
+                "longitude": -122.40955359574313
             }
         }
     ],
     "pathPrediction": {
+        "timestamp": "2024-10-16T04:22:14Z",
         "position": {
-            "latitude": 37.777807138306244,
-            "longitude": -122.42196832934034
+            "latitude": 37.77104028678432,
+            "longitude": -122.40889584217251
         },
-        "confidence": 0.6415829984145316
+        "confidence": 0.6788393468506786
     }
 }

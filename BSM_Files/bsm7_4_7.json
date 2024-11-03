@@ -1,47 +1,48 @@
 {
     "messageType": "BSM",
-    "messageId": "V7_707",
-    "messageCount": 707,
-    "vehicleId": "V7",
-    "timestamp": "2024-11-03T16:11:12Z",
+    "messageId": "7_450",
+    "messageCount": 450,
+    "vehicleId": "7",
+    "timestamp": "2024-10-16T04:22:33Z",
     "position": {
-        "latitude": 37.76532199554108,
-        "longitude": -122.41547348200648,
-        "altitude": 18.340416279825554
+        "latitude": 37.78129361359304,
+        "longitude": -122.41989910782495,
+        "altitude": 14.647445181327505
     },
-    "speed": 10.644505186591058,
-    "heading": 103.54809033711089,
+    "speed": 75.84343744062343,
+    "heading": 106.55544826266285,
     "acceleration": {
-        "x": 0.26910533852936913,
-        "y": -0.9699535521453,
-        "z": 0.09142573192673653
+        "x": -0.8933248604080317,
+        "y": -0.8038394572982726,
+        "z": 0.35576781129993285
     },
     "brakeStatus": false,
     "vehicleSize": {
-        "length": 4.55084498496973,
-        "width": 1.9357145934768356
+        "length": 4.404544554574152,
+        "width": 2.3365550925834917
     },
     "pathHistory": [
         {
-            "timestamp": "2024-11-03T16:10:42Z",
+            "timestamp": "2024-10-16T04:22:03Z",
             "position": {
-                "latitude": 37.765327845455246,
-                "longitude": -122.41555556541998
+                "latitude": 37.78124043625503,
+                "longitude": -122.4199936941223
             }
         },
         {
-            "timestamp": "2024-11-03T16:10:12Z",
+            "timestamp": "2024-10-16T04:21:33Z",
             "position": {
-                "latitude": 37.765260457299036,
-                "longitude": -122.41565421324374
+                "latitude": 37.7814350322967,
+                "longitude": -122.42003371158508
             }
         }
     ],
     "pathPrediction": {
+        "timestamp": "2024-10-16T04:22:48Z",
         "position": {
-            "latitude": 37.76631035474924,
-            "longitude": -122.41635065677778
+            "latitude": 37.78185790164416,
+            "longitude": -122.4196584431447
         },
-        "confidence": 0.9350050364180057
+        "confidence": 0.7655394803864712
     }
 }
