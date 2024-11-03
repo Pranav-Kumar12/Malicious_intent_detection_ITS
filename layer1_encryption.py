@@ -35,19 +35,23 @@ class Encryption:
 
     
 
-with open('bsm.json','r') as file:
-    data= json.load(file)  
-    # data becomes python object loading json data
 
-json_string = json.dumps(data)
-# This is stringify method as called in javascript
+def test():
+    with open('bsm.json','r') as file:
+        data= json.load(file)  
+        # data becomes python object loading json data
 
-encryption = Encryption()
-encrypted_message = encryption.encrypt(json_string)
+    json_string = json.dumps(data)
+    # This is stringify method as called in javascript
 
-print("Encrypted message is -> ", encrypted_message)
-print()
+    encryption = Encryption()
+    encrypted_message = encryption.encrypt(json_string)
 
-decrypted_message = encryption.decrypt(encrypted_message)
+    print("Encrypted message is -> ", encrypted_message)
+    print()
 
-print("Decrypted message is -> ", decrypted_message)
+    decrypted_message = encryption.decrypt(encrypted_message)
+
+    print("Decrypted message is -> ", decrypted_message)
+
+test()

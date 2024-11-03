@@ -1,0 +1,47 @@
+{
+    "messageType": "BSM",
+    "messageId": "V9_499",
+    "messageCount": 499,
+    "vehicleId": "V9",
+    "timestamp": "2024-11-03T16:11:12Z",
+    "position": {
+        "latitude": 37.78351553219454,
+        "longitude": -122.42673070716938,
+        "altitude": 14.414288407540393
+    },
+    "speed": 37.85681055006024,
+    "heading": 267.06277095719395,
+    "acceleration": {
+        "x": -0.31011273686185836,
+        "y": 0.6017071548094393,
+        "z": 0.06392002010323072
+    },
+    "brakeStatus": true,
+    "vehicleSize": {
+        "length": 3.9262332101607837,
+        "width": 2.484626577308084
+    },
+    "pathHistory": [
+        {
+            "timestamp": "2024-11-03T16:10:42Z",
+            "position": {
+                "latitude": 37.78342236519733,
+                "longitude": -122.42664911648953
+            }
+        },
+        {
+            "timestamp": "2024-11-03T16:10:12Z",
+            "position": {
+                "latitude": 37.783613105610655,
+                "longitude": -122.42677579479987
+            }
+        }
+    ],
+    "pathPrediction": {
+        "position": {
+            "latitude": 37.78339978095013,
+            "longitude": -122.42614667720754
+        },
+        "confidence": 0.7764249861729654
+    }
+}
