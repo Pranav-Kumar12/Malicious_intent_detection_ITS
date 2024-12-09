@@ -112,6 +112,13 @@ app = Flask(__name__)
 
 blockchain = Blockchain()
 
+@app.route('/', methods= ['GET'])
+def start():
+    response = {
+        'message': 'Starter page'
+    }
+    return 'Home page', 200
+
 @app.route('/transactions/new', methods=['POST'])
 def newTransaction():
     data = request.get_json()

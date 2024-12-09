@@ -37,7 +37,7 @@ class Encryption:
 
 
 def test():
-    with open('bsm.json','r') as file:
+    with open('./BSM_Files/bsm1_2_1.json','r') as file:
         data= json.load(file)  
         # data becomes python object loading json data
 

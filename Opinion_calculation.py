@@ -2,6 +2,7 @@ import json
 import os
 import math
 import numpy as np
+from tempCache.precision import adjustPrecisionErrors
 
 folderName = "BSM_Files"
 
@@ -55,5 +56,43 @@ for i in range(10):
         if messageCounts[i, j] > 0:
             directTrustMatrix[i, j] /= messageCounts[i, j]
 
+directTrustMatrix= adjustPrecisionErrors(directTrustMatrix)
+
 print("Direct Trust Matrix:")
 print(directTrustMatrix)
+
+import numpy as np
+
+def calculateIndirectTrust(directTrustMatrix):
+    numVehicles = directTrustMatrix.shape[0]
+    indirectTrustMatrix = np.zeros((numVehicles, numVehicles))
+
+    for i in range(numVehicles):      # For each vehicle i
+        for j in range(numVehicles):  # For each vehicle j
+            if i != j:
+                totalTrust = np.sum([directTrustMatrix[k][j] for k in range(numVehicles) if k != i])
+                indirectTrustMatrix[i][j] = totalTrust / (numVehicles - 1)
+    
+    return indirectTrustMatrix
+
+# Example Usage
+indirectTrustMatrix = calculateIndirectTrust(directTrustMatrix)
+print("Indirect Trust Matrix:")
+print(indirectTrustMatrix)
+
+def computeComprehensiveEvaluation(directMatrix, indirectMatrix, weight_direct=0.68, weight_indirect=0.32):
+    comprehensiveEvaluation = weight_direct * directMatrix + weight_indirect * indirectMatrix
+    return comprehensiveEvaluation
+
+comprehensiveEvaluation = computeComprehensiveEvaluation(directTrustMatrix, indirectTrustMatrix)
+print("Comprehensive Trust Matrix:")
+print(comprehensiveEvaluation)
+
+
+def computeIntermediaryOpinion(comprehensiveEvaluation):
+    intermediaryOpinionVector = np.mean(comprehensiveEvaluation, axis=1)
+    return intermediaryOpinionVector
+
+intermediaryOpinionVector = computeIntermediaryOpinion(comprehensiveEvaluation)
+print("Intermediary Opinion Vector:")
+print(intermediaryOpinionVector)
