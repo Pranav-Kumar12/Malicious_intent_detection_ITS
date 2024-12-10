@@ -29,44 +29,43 @@ messageCounts = np.zeros((10, 10))
 # We will be needing both because there can be multiple direct trust valuations for vehicle i from vehicle j as it can receive multiple bsm
 # So will average out them.
 
-def calculatedirectTrust():
-    for filename in os.listdir(folderName):
-        if filename.startswith("bsm") and filename.endswith(".json"):
-            parts = filename.replace("bsm", "").replace(".json", "").split("_")
-            i, j = int(parts[0]), int(parts[1])
-            
-            with open(os.path.join(folderName, filename), "r") as f:
-                bsmData = json.load(f)
-            
-            speed = bsmData["speed"]
-            receivedPower = bsmData.get("receivedPower", 0)  # Assuming receivedPower is already part of the BSM data
-            latitude = bsmData["position"]["latitude"]
-            longitude = bsmData["position"]["longitude"]
-            
-            # Calculate trust for speed
-            speedTrust = calculateParameterTrust(speed, speedAvg, speedThresholds)
-            
-            # Calculate trust for received power
-            powerTrust = calculateParameterTrust(receivedPower, receivedPowerAvg, powerThresholds)
-            
-            # Calculate trust for latitude and longitude
-            latitudeTrust = 0.9 if latitudeRange[0] <= latitude <= latitudeRange[1] else 0.5
-            longitudeTrust = 0.9 if longitudeRange[0] <= longitude <= longitudeRange[1] else 0.5
-            
-            # Compute the BSM trust using the geometric mean of the trusts
-            bsmTrust = geometricMean([speedTrust, powerTrust, latitudeTrust, longitudeTrust])
-            
-            directTrustMatrix[i-1, j-1] += bsmTrust 
-            messageCounts[i-1, j-1] += 1
 
-    # Average out the direct trust matrix by dividing by the message counts
-    for i in range(10):
-        for j in range(10):
-            if messageCounts[i, j] > 0:
-                directTrustMatrix[i, j] /= messageCounts[i, j]
+for filename in os.listdir(folderName):
+    if filename.startswith("bsm") and filename.endswith(".json"):
+        parts = filename.replace("bsm", "").replace(".json", "").split("_")
+        i, j = int(parts[0]), int(parts[1])
+        
+        with open(os.path.join(folderName, filename), "r") as f:
+            bsmData = json.load(f)
+        
+        speed = bsmData["speed"]
+        receivedPower = bsmData.get("receivedPower", 0) 
+        latitude = bsmData["position"]["latitude"]
+        longitude = bsmData["position"]["longitude"]
+        
+        # Calculate trust for speed
+        speedTrust = calculateParameterTrust(speed, speedAvg, speedThresholds)
+        
+        # Calculate trust for received power
+        powerTrust = calculateParameterTrust(receivedPower, receivedPowerAvg, powerThresholds)
+        
+        # Calculate trust for latitude and longitude
+        latitudeTrust = 0.9 if latitudeRange[0] <= latitude <= latitudeRange[1] else 0.5
+        longitudeTrust = 0.9 if longitudeRange[0] <= longitude <= longitudeRange[1] else 0.5
+        
+        # Compute the BSM trust using the geometric mean of the trusts
+        bsmTrust = geometricMean([speedTrust, powerTrust, latitudeTrust, longitudeTrust])
+        
+        directTrustMatrix[i-1, j-1] += bsmTrust 
+        messageCounts[i-1, j-1] += 1
 
-    directTrustMatrix= adjustPrecisionErrors(directTrustMatrix)
-    return directTrustMatrix
+# Average out the direct trust matrix by dividing by the message counts
+for i in range(10):
+    for j in range(10):
+        if messageCounts[i, j] > 0:
+            directTrustMatrix[i, j] /= messageCounts[i, j]
+
+directTrustMatrix= adjustPrecisionErrors(directTrustMatrix)
 
 # Print the final direct trust matrix
 print("Direct Trust Matrix:")
