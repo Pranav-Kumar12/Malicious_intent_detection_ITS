@@ -17,6 +17,7 @@ g = 0.15  # History parameter for reputation scores
 transaction_limit = 100  # Forge a block after 100 transactions
 opinion_threshold = 0.5  # Minimum opinion to be eligible as a validator
 b= 0.6
+l=0.4
 
 # Trust thresholds
 speedAvg = 50  # Average speed
@@ -31,7 +32,7 @@ directTrustMatrix = np.zeros((num_vehicles, num_vehicles))
 messageCounts = np.zeros((num_vehicles, num_vehicles))
 transaction_count = 0
 
-
+# Calculate parameter trust using thresholds
 def calculateParameterTrust(value, avg, thresholds):
     deviation = abs(value - avg) / avg
     for threshold, trustScore in thresholds:
@@ -39,12 +40,38 @@ def calculateParameterTrust(value, avg, thresholds):
             return trustScore
     return 0  # No trust if beyond max threshold
 
-
+# Geometric mean calculation
 def geometricMean(trustValues):
     product = np.prod(trustValues)
     return product ** (1 / len(trustValues)) if trustValues else 0
 
+# Bayesian updating for comprehensive opinion
+def bayesianComprehensiveOpinion(prior, likelihood):
+    posterior = (prior * likelihood) / ((prior * likelihood) + ((1 - prior) * (1 - likelihood)))
+    return posterior
 
+# Hidden Markov Model-based Reputation Update
+def hmm_reputation_update(reputation_scores, comprehensive_opinion, gamma=0.15):
+   
+    transition_matrix = np.array([
+        [1 - gamma, gamma],
+        [gamma, 1 - gamma]
+    ])
+    new_reputation = np.zeros((num_vehicles, 1)) 
+    for i in range(num_vehicles):
+        current_reputation = np.array([reputation_scores[i, 0], 1 - reputation_scores[i, 0]])
+        updated_reputation = np.dot(transition_matrix, current_reputation)
+        new_reputation[i,0] = (comprehensive_opinion[i] * updated_reputation[0]) + ((1 - comprehensive_opinion[i]) * updated_reputation[1])
+    print("new reputation", new_reputation)
+    new_reputation[:] = adjustPrecisionErrors(new_reputation, l)
+    print("new reputation", new_reputation)
+
+    for i in range(num_vehicles):
+        update_reputation(i, np.clip(new_reputation[i,0], 0.0, 1.0))
+    print("Update reputation", update_reputation)
+
+
+# Direct Trust Calculation
 def calculateDirectTrust():
     global directTrustMatrix, messageCounts
     directTrustMatrix = np.zeros((num_vehicles, num_vehicles))
@@ -81,7 +108,7 @@ def calculateDirectTrust():
 
     directTrustMatrix[:] = adjustPrecisionErrors(directTrustMatrix, b)
 
-
+# Indirect Trust Calculation
 def calculateIndirectTrust():
     numVehicles = directTrustMatrix.shape[0]
     indirectTrustMatrix = np.zeros((numVehicles, numVehicles))
@@ -94,30 +121,26 @@ def calculateIndirectTrust():
 
     return indirectTrustMatrix
 
+# Calculate Comprehensive Opinion
+def computeComprehensiveEvaluation(directMatrix, indirectMatrix):
+    comprehensive_opinion = np.zeros((num_vehicles, num_vehicles))
+    for i in range(num_vehicles):
+        for j in range(num_vehicles):
+            comprehensive_opinion[i, j] = bayesianComprehensiveOpinion(directMatrix[i, j], indirectMatrix[i, j])
+    return comprehensive_opinion
 
-def computeComprehensiveEvaluation(directMatrix, indirectMatrix, weight_direct=0.68, weight_indirect=0.32):
-    return weight_direct * directMatrix + weight_indirect * indirectMatrix
-
-
+# Calculate intermediary opinions
 def computeIntermediaryOpinion(comprehensiveEvaluation):
     return np.mean(comprehensiveEvaluation, axis=1)
 
-g= 0.15 #  history parameter
-num_vehicles = 10 
-
-def update_reputation_scores(intermediary_opinion, reputation_scores, g):
-    # Calculate the current reputation score and update the reputation matrix
-    for i in range(num_vehicles):
-        reputationScoreCur = intermediary_opinion[i] + g * reputation_scores[i, 0] + g**2 * reputation_scores[i, 1] + g**3 * reputation_scores[i, 2]
-        update_reputation(i, reputationScoreCur)
-
+# Update validators based on reputation
 def updateValidators():
     for i in range(num_vehicles):
         opinion = reputation_scores[i, 0]
         if opinion >= opinion_threshold:
             requests.post(f"{blockchain_url}/validator/add", json={"validator_id": f"vehicle_{i + 1}", "opinion_value": opinion})
 
-
+# Create a time-ordered queue for BSM files
 def create_timeQueue():
     timeQueue = []
     for filename in os.listdir(folderName):
@@ -126,17 +149,14 @@ def create_timeQueue():
                 bsmData = json.load(f)
                 timestamp = datetime.strptime(bsmData["timestamp"], "%Y-%m-%dT%H:%M:%SZ")
                 timeQueue.append((timestamp, filename))
-    # Sort the queue based on timestamp
     timeQueue.sort(key=lambda x: x[0])
     return timeQueue
 
-
+# Process BSM files and update trust scores
 def process_bsm_files():
     global transaction_count
-
-    # Create the timeQueue sorted by timestamp
     timeQueue = create_timeQueue()
-
+    in_val= l
     for timestamp, filename in timeQueue:
         parts = filename.replace("bsm", "").replace(".json", "").split("_")
         sender_vehicle = f"vehicle_{parts[0]}"
@@ -155,28 +175,20 @@ def process_bsm_files():
         print(f"[{timestamp}] {response.json()}")
         transaction_count += 1
 
-        # Forge a block and recalculate trust metrics after 100 transactions
         if transaction_count >= transaction_limit:
             mine_response = requests.get(f"{blockchain_url}/mine")
             print(mine_response.json())
 
-            # Recalculate trust metrics and update reputation scores
             calculateDirectTrust()
             indirectTrustMatrix = calculateIndirectTrust()
             comprehensiveEvaluation = computeComprehensiveEvaluation(directTrustMatrix, indirectTrustMatrix)
             intermediaryOpinionVector = computeIntermediaryOpinion(comprehensiveEvaluation)
-            update_reputation_scores(intermediaryOpinionVector, reputation_scores, g)
-
+            hmm_reputation_update(reputation_scores, intermediaryOpinionVector, g)
             print("Updated Reputation Scores:")
             print(reputation_scores)
             print('-' * 100)
-
-            # Update validators based on the latest reputation scores
             updateValidators()
-
-            # Reset transaction count
             transaction_count = 0
-
 
 # Start the process
 process_bsm_files()

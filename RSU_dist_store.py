@@ -12,7 +12,5 @@ def update_reputation(vehicle_id, new_reputation_score):
         print(f"Error: vehicle_id {vehicle_id} is out of range.")
 
 
-    
-
 if __name__ == "__main__":
     print("RSU initialized..")

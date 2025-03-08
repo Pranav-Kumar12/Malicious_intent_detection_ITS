@@ -2,10 +2,15 @@ import hashlib
 import random
 import json
 from time import time
+from datetime import datetime
 from flask import Flask, jsonify, request
 from layer1Encryption import Encryption
 from RSU_dist_store import reputation_scores
 
+def getTrasactionId(sender, receiver):
+    timeNow = time()
+    transactionID = f"{sender[8::]}.{timeNow}.{receiver[8::]}"
+    return transactionID
 
 class Blockchain:
     def __init__(self):
@@ -61,7 +66,10 @@ class Blockchain:
         newMessageTransaction = {
             'senderVehicle': senderVehicle,
             'receiverVehicle': receiverVehicle,
-            'v2xMessage': encryptedV2xMessage
+            'transactionId': getTrasactionId(senderVehicle, receiverVehicle),
+            'v2xMessage': encryptedV2xMessage,
+            'validationStatus': 'trusted',
+            'RSU_ID': 'rsu1'
         }
         self.currentTransactions.append(newMessageTransaction)
         return self.wholeChain[-1]['index'] + 1
@@ -124,7 +132,7 @@ def decryptTransaction():
 
 @app.route('/chain', methods=['GET'])
 def whole_chain():
-    return jsonify({'chain': blockchain.wholeChain, 'length': len(blockchain.wholeChain)}), 200
+    return jsonify({'consensusType': 'DPos','chain': blockchain.wholeChain, 'length': len(blockchain.wholeChain)}), 200
 
 if __name__ == '__main__':
     for i in range(10):
